@@ -43,20 +43,35 @@ type Avail struct {
 func New(expression string) (Avail, error) {
 	isMatch := cronExpressionRegex.MatchString(expression)
 	if !isMatch {
-		return Avail{}, fmt.Errorf("could not parse cron expression: %s", expression)
+		return Avail{}, fmt.Errorf("could not parse cron expression: %s; misformatted expression", expression)
 	}
 
 	terms := strings.Split(expression, " ")
 	// we need this extra check to make sure there are the proper amount of fields because I am bad at regex
-	if len(terms) != 6 {
-		return Avail{}, fmt.Errorf("could not parse cron expression: %s; must have 6 terms", expression)
-	}
+	// if len(terms) != 6 {
+	// 	return Avail{}, fmt.Errorf("could not parse cron expression: %s; must have 6 terms", expression)
+	// }
 
 	minutes, err := newField(minute, terms[0], 0, 59)
+	if err != nil {
+		return Avail{}, err
+	}
 	hours, err := newField(hour, terms[1], 0, 23)
+	if err != nil {
+		return Avail{}, err
+	}
 	day, err := newField(day, terms[2], 1, 31)
+	if err != nil {
+		return Avail{}, err
+	}
 	month, err := newField(month, terms[3], 1, 12)
+	if err != nil {
+		return Avail{}, err
+	}
 	weekday, err := newField(weekday, terms[4], 0, 6)
+	if err != nil {
+		return Avail{}, err
+	}
 	year, err := newField(year, terms[5], 1970, 2100)
 	if err != nil {
 		return Avail{}, err

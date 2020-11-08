@@ -8,6 +8,65 @@ import (
 	"github.com/google/go-cmp/cmp"
 )
 
+func TestParseable(t *testing.T) {
+	tests := map[string]struct {
+		expression string
+	}{
+		"wildcard": {
+			expression: "* * * * * *",
+		},
+		"ranges": {
+			expression: "* * 25-30 12 * 2020",
+		},
+		"single values": {
+			expression: "* * 1 1 * *",
+		},
+		"range + single value": {
+			expression: "* * * 6,7,8 * 2020",
+		},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			_, err := New(tc.expression)
+			if err != nil {
+				t.Errorf("expression %s should be parsed successfully", tc.expression)
+			}
+		})
+	}
+}
+
+func TestUnparseable(t *testing.T) {
+	tests := map[string]struct {
+		expression string
+	}{
+		"too many arguments": {
+			expression: "* * * * * * *",
+		},
+		"too few arguments": {
+			expression: "* * * *",
+		},
+		"out of bounds single value": {
+			expression: "* * * * 22222 *",
+		},
+		"out of bounds range": {
+			expression: "10-500 * * * * *",
+		},
+		"out of bounds list": {
+			expression: "* 1,40,100 * * * *",
+		},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			_, err := New(tc.expression)
+			if err == nil {
+				t.Errorf("expression %s should not be parsed successfully", tc.expression)
+			}
+		})
+	}
+}
+
 func TestNew(t *testing.T) {
 	tests := map[string]struct {
 		expression string
