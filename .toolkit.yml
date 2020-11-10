@@ -1,0 +1,6 @@
+repository: clintjedwards/avail
+commands:
+  build:
+    - go mod tidy
+    - go test .
+    - go build -ldflags '-X "main.version={{.Version}}"' -o {{.Path}}
