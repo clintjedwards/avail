@@ -47,10 +47,6 @@ func New(expression string) (Avail, error) {
 	}
 
 	terms := strings.Split(expression, " ")
-	// we need this extra check to make sure there are the proper amount of fields because I am bad at regex
-	// if len(terms) != 6 {
-	// 	return Avail{}, fmt.Errorf("could not parse cron expression: %s; must have 6 terms", expression)
-	// }
 
 	minutes, err := newField(minute, terms[0], 0, 59)
 	if err != nil {

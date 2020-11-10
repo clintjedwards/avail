@@ -183,7 +183,13 @@ func TestAble(t *testing.T) {
 	}{
 		"wildcard":           {"* * * * * *", time.Now(), true},
 		"year out of range":  {"* * * * * 2019", time.Now(), false},
-		"year list in range": {"* * * * * 2019,2020,2021", time.Now(), true},
+		"year list in range": {"* * * * * 2019,2020,2021", time.Date(2020, 1, 1, 1, 1, 1, 1, time.UTC), true},
+		"specific day of week": {"* * * 6 2 2020",
+			time.Date(2020, 6, 2, 1, 1, 1, 1, time.UTC), true},
+		"specific day of week; out of range": {"* * * 6 2 2020",
+			time.Date(2020, 8, 4, 1, 1, 1, 1, time.UTC), false},
+		"every day at noon in January only": {"0 12 * 1 * *",
+			time.Date(2020, 1, 24, 12, 0, 0, 0, time.UTC), true},
 	}
 
 	for name, tc := range tests {
