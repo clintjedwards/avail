@@ -190,6 +190,8 @@ func TestAble(t *testing.T) {
 			time.Date(2020, 8, 4, 1, 1, 1, 1, time.UTC), false},
 		"every day at noon in January only": {"0 12 * 1 * *",
 			time.Date(2020, 1, 24, 12, 0, 0, 0, time.UTC), true},
+		"every day from 6am to 2pm": {"* 6-14 * * * *",
+			time.Date(2020, 1, 24, 12, 0, 0, 0, time.UTC), true},
 	}
 
 	for name, tc := range tests {
