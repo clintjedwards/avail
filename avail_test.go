@@ -46,6 +46,9 @@ func TestUnparseable(t *testing.T) {
 		"too few arguments": {
 			expression: "* * * *",
 		},
+		"too few arguments w/ value": {
+			expression: "* 14 * * *",
+		},
 		"out of bounds single value": {
 			expression: "* * * * 22222 *",
 		},
