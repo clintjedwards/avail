@@ -73,9 +73,9 @@ func TestUnparseable(t *testing.T) {
 func TestNew(t *testing.T) {
 	tests := map[string]struct {
 		expression string
-		want       Avail
+		want       Timeframe
 	}{
-		"wildcard": {"* * * * * *", Avail{
+		"wildcard": {"* * * * * *", Timeframe{
 			Expression: "* * * * * *",
 			ParsedExpression: ParsedExpression{
 				Minutes: Field{
@@ -212,7 +212,7 @@ func TestAble(t *testing.T) {
 
 }
 
-func ExampleAvail_Able() {
+func ExampleTimeframe_Able() {
 	avail, _ := New("* * * * * *")
 
 	now := time.Now()

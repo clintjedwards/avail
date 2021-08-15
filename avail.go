@@ -13,11 +13,11 @@ type fieldType string
 
 const (
 	minute  fieldType = "minute"
-	hour              = "hour"
-	day               = "day"
-	month             = "month"
-	weekday           = "weekday"
-	year              = "year"
+	hour    fieldType = "hour"
+	day     fieldType = "day"
+	month   fieldType = "month"
+	weekday fieldType = "weekday"
+	year    fieldType = "year"
 )
 
 var cronExpressionRegex = regexp.MustCompile(`^((((\d+,)+\d+|(\d+(-)\d+)|\d+|\*) ?){6})$`)
@@ -32,52 +32,52 @@ type ParsedExpression struct {
 	Years    Field
 }
 
-// Avail represents both the raw cron expression and the datastructures used to represent that
+// Timeframe represents both the raw cron expression and the datastructures used to represent that
 // expression for easy checking
-type Avail struct {
+type Timeframe struct {
 	Expression       string // * * * * * * 6 fields - min, hours, day of month, month, day of week, year
 	ParsedExpression ParsedExpression
 }
 
 // New will parse the given cron expression and allow user to check if the time given is within
-func New(expression string) (Avail, error) {
+func New(expression string) (Timeframe, error) {
 	isMatch := cronExpressionRegex.MatchString(expression)
 	if !isMatch {
-		return Avail{}, fmt.Errorf("could not parse cron expression: %s; misformatted expression", expression)
+		return Timeframe{}, fmt.Errorf("could not parse cron expression: %s; misformatted expression", expression)
 	}
 
 	terms := strings.Split(expression, " ")
 	// we need this extra check to make sure there are the proper amount of fields because I am bad at regex
 	if len(terms) != 6 {
-		return Avail{}, fmt.Errorf("could not parse cron expression: %s; must have 6 terms", expression)
+		return Timeframe{}, fmt.Errorf("could not parse cron expression: %s; must have 6 terms", expression)
 	}
 
 	minutes, err := newField(minute, terms[0], 0, 59)
 	if err != nil {
-		return Avail{}, err
+		return Timeframe{}, err
 	}
 	hours, err := newField(hour, terms[1], 0, 23)
 	if err != nil {
-		return Avail{}, err
+		return Timeframe{}, err
 	}
 	day, err := newField(day, terms[2], 1, 31)
 	if err != nil {
-		return Avail{}, err
+		return Timeframe{}, err
 	}
 	month, err := newField(month, terms[3], 1, 12)
 	if err != nil {
-		return Avail{}, err
+		return Timeframe{}, err
 	}
 	weekday, err := newField(weekday, terms[4], 0, 6)
 	if err != nil {
-		return Avail{}, err
+		return Timeframe{}, err
 	}
 	year, err := newField(year, terms[5], 1970, 2100)
 	if err != nil {
-		return Avail{}, err
+		return Timeframe{}, err
 	}
 
-	return Avail{
+	return Timeframe{
 		Expression: expression,
 		ParsedExpression: ParsedExpression{
 			Minutes:  minutes,
@@ -91,7 +91,7 @@ func New(expression string) (Avail, error) {
 }
 
 // Able will evaluate if the time given is within the cron expression.
-func (a *Avail) Able(time time.Time) bool {
+func (a *Timeframe) Able(time time.Time) bool {
 	fieldTypes := []fieldType{
 		minute,
 		hour,

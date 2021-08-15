@@ -25,10 +25,10 @@ type termKind string
 
 const (
 	span     termKind = "span"
-	wildcard          = "wildcard"
-	list              = "list"
-	value             = "value"
-	unknown           = "unknown"
+	wildcard termKind = "wildcard"
+	list     termKind = "list"
+	value    termKind = "value"
+	unknown  termKind = "unknown"
 )
 
 // termRegexToType stores the mapping between a term's regex representation
