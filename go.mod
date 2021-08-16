@@ -1,4 +1,4 @@
-module github.com/clintjedwards/avail
+module github.com/clintjedwards/avail/v2
 
 go 1.14
 
