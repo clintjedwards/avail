@@ -46,6 +46,8 @@ elements exist in the representation of the cron expression.
 
 Initiate a new avail instance with cron expression.
 
+    import "github.com/clintjedwards/avail/v2"
+
     avail, _ := avail.New("* * * * * *")
 
 This will parse the cron expression given and
