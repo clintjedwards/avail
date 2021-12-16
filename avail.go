@@ -43,7 +43,7 @@ type Timeframe struct {
 func New(expression string) (Timeframe, error) {
 	isMatch := cronExpressionRegex.MatchString(expression)
 	if !isMatch {
-		return Timeframe{}, fmt.Errorf("could not parse cron expression: %s; misformatted expression", expression)
+		return Timeframe{}, fmt.Errorf("could not parse cron expression: %s; mis-formatted expression", expression)
 	}
 
 	terms := strings.Split(expression, " ")

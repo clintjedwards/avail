@@ -178,7 +178,6 @@ func TestParseSpan(t *testing.T) {
 }
 
 func TestAble(t *testing.T) {
-
 	tests := map[string]struct {
 		expression string
 		time       time.Time
@@ -187,14 +186,22 @@ func TestAble(t *testing.T) {
 		"wildcard":           {"* * * * * *", time.Now(), true},
 		"year out of range":  {"* * * * * 2019", time.Now(), false},
 		"year list in range": {"* * * * * 2019,2020,2021", time.Date(2020, 1, 1, 1, 1, 1, 1, time.UTC), true},
-		"specific day of week": {"* * * 6 2 2020",
-			time.Date(2020, 6, 2, 1, 1, 1, 1, time.UTC), true},
-		"specific day of week; out of range": {"* * * 6 2 2020",
-			time.Date(2020, 8, 4, 1, 1, 1, 1, time.UTC), false},
-		"every day at noon in January only": {"0 12 * 1 * *",
-			time.Date(2020, 1, 24, 12, 0, 0, 0, time.UTC), true},
-		"every day from 6am to 2pm": {"* 6-14 * * * *",
-			time.Date(2020, 1, 24, 12, 0, 0, 0, time.UTC), true},
+		"specific day of week": {
+			"* * * 6 2 2020",
+			time.Date(2020, 6, 2, 1, 1, 1, 1, time.UTC), true,
+		},
+		"specific day of week; out of range": {
+			"* * * 6 2 2020",
+			time.Date(2020, 8, 4, 1, 1, 1, 1, time.UTC), false,
+		},
+		"every day at noon in January only": {
+			"0 12 * 1 * *",
+			time.Date(2020, 1, 24, 12, 0, 0, 0, time.UTC), true,
+		},
+		"every day from 6am to 2pm": {
+			"* 6-14 * * * *",
+			time.Date(2020, 1, 24, 12, 0, 0, 0, time.UTC), true,
+		},
 	}
 
 	for name, tc := range tests {
@@ -209,7 +216,6 @@ func TestAble(t *testing.T) {
 			}
 		})
 	}
-
 }
 
 func ExampleTimeframe_Able() {

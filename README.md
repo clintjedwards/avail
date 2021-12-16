@@ -6,6 +6,10 @@ then efficiently checks whether a given golang time object exists within that ti
 The package uses a subset of the extended cron standard:
 https://en.wikipedia.org/wiki/Cron#CRON_expression
 
+[![Go Report Card](https://goreportcard.com/badge/gojp/goreportcard)](https://goreportcard.com/report/github.com/clintjedwards/avail)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/clintjedwards/avail/blob/main/LICENSE)
+[![Go Reference](https://pkg.go.dev/badge/github.com/clintjedwards/avail/v2.svg)](https://pkg.go.dev/github.com/clintjedwards/avail/v2)
+
 ## Why
 
 It is sometimes useful to represent certain timeframes using cron expressions.

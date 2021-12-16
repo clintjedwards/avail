@@ -9,7 +9,7 @@ import (
 // Field represents a single value of a cron expression sometimes called a term
 // Ex. in the expression: "0 15 10 * * *", "15" would be a field.
 //
-// Fields have map sets so that they're easy/efficent to check.
+// Fields have map sets so that they're easy/efficient to check.
 type Field struct {
 	// TODO(clintjedwards): there are some hardcoded values that exist for each field,
 	// it might make sense to break this apart into its own struct so that it's easier
