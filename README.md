@@ -33,12 +33,25 @@ Avail implements/uses a stripped down version of the cron expression syntax as d
 
     Field           Allowed values  Allowed special characters
 
-    Minutes         0-59            * , -
-    Hours           0-23            * , -
+    Minute          0-59            * , -
+    Hour            0-23            * , -
     Day of month    1-31            * , -
     Month           1-12            * , -
-    Day of week     0-6             * , -
+    Day of week     0-6             * , - (Sunday to Saturday)
     Year            1970-2100       * , -
+
+---
+
+    ┌───────────── minute (0 - 59)
+    │ ┌───────────── hour (0 - 23)
+    │ │ ┌───────────── day of the month (1 - 31)
+    │ │ │ ┌───────────── month (1 - 12)
+    │ │ │ │ ┌───────────── day of the week (0 - 6) (Sunday to Saturday)
+    │ │ │ │ │ ┌───────────── Year (1970-2100)
+    │ │ │ │ │ │
+    │ │ │ │ │ │
+    │ │ │ │ │ │
+    * * * * * *
 
 Avail accepts a cron expression in the format above, splits it into separate fields, parses it,
 and generates map backed sets for each field in order to allow speedy checking of value existence.
